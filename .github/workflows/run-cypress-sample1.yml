@@ -1,0 +1,50 @@
+name: Cypress Tests with Slack Notification
+
+run-name: "Cypress run for sample1 test on ${{ github.ref }} by ${{ github.actor }}"
+
+on:
+  # push:
+  #   branches: [ main ]
+  # pull_request:
+  #   branches: [ main ]
+  schedule:
+    # This cron will never run (Feb 30th does not exist)
+    - cron: '0 0 30 2 *'
+
+jobs:
+  sample1-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Install dependencies
+        run: npm ci
+      - name: Run Sample1 Cypress test
+        env:
+          TERM: dumb
+        run: |
+          npx cypress run \
+          --spec cypress/e2e/sample1.cy.ts \
+          --headed --browser chrome
+      - name: Slack Notification - Success
+        if: success()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_MESSAGE: |
+            * ✅ Cypress test run for sample1 test succeeded!*
+            View Workflow Run>
+          SLACK_COLOR: good
+      - name: Slack Notification - Failure
+        if: failure()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_MESSAGE: |
+            * ❌ Cypress test run for sample1 test failed!*
+          SLACK_COLOR: danger
