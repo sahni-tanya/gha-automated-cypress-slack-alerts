@@ -2,16 +2,12 @@ name: Cypress Tests with Slack Notification
 
 run-name: "Cypress run for Sample2 test on ${{ github.ref }} by ${{ github.actor }}"
 
-
-
 on:
-  # push:
-  #   branches: [ main ]
-  # pull_request:
-  #   branches: [ main ]
+  push:
   schedule:
-    # This cron will never run (Feb 30th does not exist)
+    #This cron will never run (Feb 30th does not exist)
     - cron: '0 0 30 2 *'
+
 jobs:
   sample2-run:
     runs-on: ubuntu-latest
