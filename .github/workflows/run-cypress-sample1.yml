@@ -4,6 +4,8 @@ run-name: "Cypress run for sample1 test on ${{ github.ref }} by ${{ github.actor
 
 on:
   push:
+    branches:
+      - main
   schedule:
     #This cron will never run (Feb 30th does not exist)
     - cron: '0 0 30 2 *'
