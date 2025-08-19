@@ -20,3 +20,17 @@ cypress/reports/
 # Misc
 .DS_Store
 .env
+
+# Editor temp files
+~*
+*~
+*.swp
+
+# Coverage directory
+coverage
+
+# IntelliJ IDEA
+/.idea/
+
+# nyc test coverage tool output
+.nyc_output/
