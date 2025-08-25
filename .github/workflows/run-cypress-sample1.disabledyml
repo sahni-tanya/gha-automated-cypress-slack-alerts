@@ -1,4 +1,4 @@
-name: Cypress Tests with Slack Notification
+name: Disabled - Cypress Tests with Slack Notification
 
 run-name: "Cypress run for sample1 test on ${{ github.ref }} by ${{ github.actor }}"
 
@@ -12,6 +12,7 @@ on:
 
 jobs:
   sample1-run:
+    if: false  # temporarily disabled via option 4
     runs-on: ubuntu-latest
 
     steps:
