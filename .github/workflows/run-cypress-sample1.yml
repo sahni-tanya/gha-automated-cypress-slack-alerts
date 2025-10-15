@@ -12,7 +12,6 @@ on:
 
 jobs:
   sample1-run:
-    if: false  # temporarily disabled via option 4
     runs-on: ubuntu-latest
 
     steps:
