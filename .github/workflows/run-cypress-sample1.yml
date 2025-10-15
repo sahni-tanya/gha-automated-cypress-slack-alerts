@@ -30,20 +30,29 @@ jobs:
           npx cypress run \
           --spec cypress/e2e/sample1.cy.ts \
           --headed --browser chrome
-      - name: Slack Notification - Success
-        if: success()
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_MESSAGE: |
-            * ✅ Cypress test run for sample1 test succeeded!*
-            View Workflow Run>
-          SLACK_COLOR: good
-      - name: Slack Notification - Failure
+      - name: Notify Slack - Failure
         if: failure()
-        uses: rtCamp/action-slack-notify@v2
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+          payload: |
+            {
+              "channel": "#notify-cypress-test-result",
+              "username": "github-actions",
+              "text": "The sample1 has an error. :x: Check the results here: <https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Workflow Run>",
+              "icon_emoji": ":x:"
+            }
         env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_MESSAGE: |
-            * ❌ Cypress test run for sample1 test failed!*
-          SLACK_COLOR: danger
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+      - name: Notify Slack - Success
+        if: success()
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+          payload: |
+            {
+              "channel": "#notify-cypress-test-result",
+              "username": "github-actions",
+              "text": "The sample1 is successful. :white_check_mark: Check the results here: <https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Workflow Run>",
+              "icon_emoji": ":white_check_mark:"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
