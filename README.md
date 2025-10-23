@@ -67,3 +67,17 @@ Job: cypress-run
 Timestamp: <timestamp>
 Workflow Run: <https://github.com/<repo>/actions/runs/<run-id>|Click to view>
 ```
+## Different exaple to integerate the Slack Notification
+
+Example 
+```
+name: Slack Notification
+uses: rtCamp/action-slack-notify@v2
+```
+
+Another Example 
+```
+name: Notify Slack 
+uses: slackapi/slack-github-action@v1.23.0
+
+```
