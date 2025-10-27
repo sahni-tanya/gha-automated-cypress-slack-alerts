@@ -1,4 +1,4 @@
-name: Cypress Tests with Slack Notification
+name: Disable Cypress Tests with Slack Notification
 
 run-name: "Cypress run for sample1 test on ${{ github.ref }} by ${{ github.actor }}"
 
